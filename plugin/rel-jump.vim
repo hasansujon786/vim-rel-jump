@@ -17,14 +17,18 @@ if !exists('g:rel_jump_first_char')
 endif
 
 function! RelJump(key)
-    let distance = v:count1
-    if distance >= g:rel_jump_min_distance
-	exec "normal! m'"
-    endif
+  let distance = v:count1
+  if distance >= g:rel_jump_min_distance
+    exec "normal! m'"
+  endif
+  if distance == 1
+    exec "normal! ".distance.'g'.a:key
+  else
     exec "normal! ".distance.a:key
-    if g:rel_jump_first_char && distance >= g:rel_jump_min_distance
-	exec "normal! ^"
-    endif
+  endif
+  if g:rel_jump_first_char && distance >= g:rel_jump_min_distance
+    exec "normal! ^"
+  endif
 endfunction
 
 nnoremap <silent> j :<C-U>call RelJump('j')<CR>
